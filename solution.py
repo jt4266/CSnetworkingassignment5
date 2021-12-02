@@ -155,11 +155,13 @@ def get_route(hostname):
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     print("{},{:.0f} ms,{}".format(
                         ttl, (timeReceived - t)*1000, addr[0]))
+
+                    return tracelist2
                     #Fill in end
                 else:
                     #Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
-
+                    tracelist2.append("error")
                     #Fill in end
                     break
             finally:
