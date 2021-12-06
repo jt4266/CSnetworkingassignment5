@@ -101,7 +101,7 @@ def get_route(hostname):
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     # You should add the list above to your all traces list
-                    tracelist2.append(whatReady)
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 timeReceived = time.time()
@@ -110,7 +110,7 @@ def get_route(hostname):
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     # You should add the list above to your all traces list
-                    tracelist2.append(whatReady)
+                    tracelist2.append(tracelist1)
                     #Fill in end
             except timeout:
                 continue
@@ -129,7 +129,7 @@ def get_route(hostname):
                     #Fill in end
                 except herror:  # if the host does not provide a hostname
                     #Fill in start
-                    print("Unknown host")
+                    tracelist1.append("hostname not returnable")
                     #Fill in end
 
                 if types == 11:
@@ -137,26 +137,34 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # You should add your responses to your lists here
-                    print("{},{:.0f} ms,{}".format(
-                        ttl, (timeReceived - t)*1000, addr[0]))
+                    tracelist1.append(str(int((timeReceived - t)*1000))+"ms")
+                    tracelist1.append(addr[0])
+                    tracelist1.append(hostname)
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # You should add your responses to your lists here
-                    print("{},{:.0f} ms,{}".format(
-                        ttl, (timeReceived - t)*1000, addr[0]))
+                    tracelist1.append(str(int((timeReceived - t)*1000))+"ms")
+                    tracelist1.append(addr[0])
+                    tracelist1.append(hostname)
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
-                    print("{},{:.0f} ms,{}".format(
-                        ttl, (timeReceived - t)*1000, addr[0]))
+                    tracelist1.append(str(int((timeReceived - t)*1000))+"ms")
+                    destIp = addr[0]
+                    tracelist1.append(destIp)
+                    tracelist1.append(hostname)
+                    tracelist2.append(tracelist1)
 
-                    return tracelist2
+                    if(str(destIp) == destAddr):
+                        return(tracelist2)
                     #Fill in end
                 else:
                     #Fill in start
@@ -166,3 +174,9 @@ def get_route(hostname):
                     break
             finally:
                 mySocket.close()
+
+        print(" ".join(tracelist1))
+    return (tracelist2)
+
+
+get_route("www.google.com")
