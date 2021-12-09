@@ -82,6 +82,7 @@ def get_route(hostname):
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
             destAddr = gethostbyname(hostname)
+            targetName = gethostbyaddr(destAddr)[0]
             icmp = getprotobyname("icmp")
             #Fill in start
             # Make a raw socket named mySocket
@@ -118,6 +119,7 @@ def get_route(hostname):
             else:
                 #Fill in start
                 # Fetch the icmp type from the IP packet
+                #hostAddress = str(inet_ntoa(recvPacket[12:16]))
                 ICMPHeader = recvPacket[20:28]
                 types, code, mychecksum, packetID, sequence = struct.unpack(
                     "bbHHh", ICMPHeader)
@@ -125,12 +127,13 @@ def get_route(hostname):
                 #Fill in end
                 try:  # try to fetch the hostname
                     #Fill in start
-                    destAddr = gethostbyname(hostname)
-                    destName = hostname
+                    #destAddr = gethostbyname(hostname)
+                    destName = gethostbyaddr(addr[0])[0]
                     #Fill in end
                 except herror as e:  # if the host does not provide a hostname
                     #Fill in start
-                    tracelist1.append(e)
+                    destName = "Hostname not returned"
+                    print("host not found")
                     #Fill in end
 
                 if types == 11:
@@ -139,7 +142,8 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  hostname])
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  destName])
+                    print("type 11 destname "+destAddr+" host "+addr[0])
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -147,7 +151,8 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname])
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
+                    print("type 3 destname "+destAddr+" host "+addr[0])
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -155,9 +160,9 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname])
-
-                    if(destAddr == str(addr[0])):
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
+                    print("type 0 destname "+destAddr+" host "+addr[0])
+                    if(addr[0] == destAddr):
                         tracelist2 = tracelist2+tracelist1
                         return(tracelist2)
                     #Fill in end
@@ -165,6 +170,8 @@ def get_route(hostname):
                     #Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
                     tracelist1.append("error")
+                    print("if error")
+                    tracelist2.append(tracelist1)
                     #Fill in end
                     break
             finally:
@@ -174,4 +181,5 @@ def get_route(hostname):
         # return (tracelist2)
 
 
-get_route("www.google.com")
+# print(get_route("www.bing.com"))
+get_route("www.bing.com")
