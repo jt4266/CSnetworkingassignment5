@@ -157,7 +157,7 @@ def get_route(hostname):
                     tracelist1.append(
                         [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname])
 
-                    if(destAddr == addr[0]):
+                    if(destAddr == str(addr[0])):
                         tracelist2 = tracelist2+tracelist1
                         return(tracelist2)
                     #Fill in end
