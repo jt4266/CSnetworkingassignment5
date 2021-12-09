@@ -139,7 +139,7 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        (ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  hostname))
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  hostname])
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -147,7 +147,7 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        (ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname))
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname])
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -155,16 +155,16 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1.append(
-                        (ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname))
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], hostname])
 
                     if(destAddr == addr[0]):
-                        tracelist2.append(tracelist1)
+                        tracelist2 = tracelist2+tracelist1
                         return(tracelist2)
                     #Fill in end
                 else:
                     #Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
-                    tracelist2.append("error")
+                    tracelist1.append("error")
                     #Fill in end
                     break
             finally:
@@ -174,4 +174,4 @@ def get_route(hostname):
         # return (tracelist2)
 
 
-get_route("www.google.com")
+print(get_route("www.google.com"))
