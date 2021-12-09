@@ -133,7 +133,7 @@ def get_route(hostname):
                 except herror as e:  # if the host does not provide a hostname
                     #Fill in start
                     destName = "Hostname not returned"
-                    print("host not found")
+                    #print("host not found")
                     #Fill in end
 
                 if types == 11:
@@ -143,7 +143,7 @@ def get_route(hostname):
                     # You should add your responses to your lists here
                     tracelist1.append(
                         [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  destName])
-                    print("type 11 destname "+destAddr+" host "+addr[0])
+                    #print("type 11 destname "+destAddr+" host "+addr[0])
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -152,7 +152,7 @@ def get_route(hostname):
                     # You should add your responses to your lists here
                     tracelist1.append(
                         [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
-                    print("type 3 destname "+destAddr+" host "+addr[0])
+                    #print("type 3 destname "+destAddr+" host "+addr[0])
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -161,7 +161,7 @@ def get_route(hostname):
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1.append(
                         [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
-                    print("type 0 destname "+destAddr+" host "+addr[0])
+                    #print("type 0 destname "+destAddr+" host "+addr[0])
                     if(addr[0] == destAddr):
                         tracelist2 = tracelist2+tracelist1
                         return(tracelist2)
@@ -170,7 +170,7 @@ def get_route(hostname):
                     #Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
                     tracelist1.append("error")
-                    print("if error")
+                    #print("if error")
                     tracelist2.append(tracelist1)
                     #Fill in end
                     break
@@ -182,4 +182,4 @@ def get_route(hostname):
 
 
 # print(get_route("www.bing.com"))
-get_route("www.bing.com")
+get_route("www.google.com")
