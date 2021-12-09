@@ -128,9 +128,9 @@ def get_route(hostname):
                     destAddr = gethostbyname(hostname)
                     destName = hostname
                     #Fill in end
-                except herror:  # if the host does not provide a hostname
+                except herror as e:  # if the host does not provide a hostname
                     #Fill in start
-                    tracelist1.append("hostname not returnable")
+                    tracelist1.append(e)
                     #Fill in end
 
                 if types == 11:
