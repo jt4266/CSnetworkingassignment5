@@ -141,11 +141,8 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     # You should add your responses to your lists here
-                    tracelist1.append(ttl)
-                    tracelist1.append((str(int((timeReceived - t)*1000))+"ms"))
-                    tracelist1.append(addr[0])
-                    tracelist1.append(destName)
-                    tracelist2.append(tracelist1)
+                    tracelist1.append(
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  destName])
                     # print("type 11 destname "+destAddr+" host "+addr[0])
                     # Fill in end
                 elif types == 3:
@@ -153,11 +150,8 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     # You should add your responses to your lists here
-                    tracelist1.append(ttl)
-                    tracelist1.append((str(int((timeReceived - t)*1000))+"ms"))
-                    tracelist1.append(addr[0])
-                    tracelist1.append(destName)
-                    tracelist2.append(tracelist1)
+                    tracelist1.append(
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
                     # print("type 3 destname "+destAddr+" host "+addr[0])
                     # Fill in end
                 elif types == 0:
@@ -165,13 +159,11 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
-                    tracelist1.append(ttl)
-                    tracelist1.append((str(int((timeReceived - t)*1000))+"ms"))
-                    tracelist1.append(addr[0])
-                    tracelist1.append(destName)
-                    tracelist2.append(tracelist1)
+                    tracelist1.append(
+                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
                     # print("type 0 destname "+destAddr +" host "+addr[0])
                     if(addr[0] == destAddr):
+                        tracelist2 = tracelist2+tracelist1
                         return(tracelist2)
                     # Fill in end
                 else:
@@ -186,5 +178,5 @@ def get_route(hostname):
                 mySocket.close()
 
 
-get_route("www.google.com")
-# print(get_route("www.google.com"))
+# get_route("www.google.com")
+print(get_route("www.google.com"))
