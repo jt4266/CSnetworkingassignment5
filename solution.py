@@ -51,6 +51,7 @@ def build_packet():
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     data = struct.pack("d", time.time())
     # Calculate the checksum on the data and the dummy header.
+
     myChecksum = checksum(header + data)
 
     # Get the right checksum, and put in the header
@@ -126,7 +127,7 @@ def get_route(hostname):
 
                 # Fill in end
                 try:  # try to fetch the hostname
-                    # Fill in start
+                    # Fill in start()
                     # destAddr = gethostbyname(hostname)
                     destName = gethostbyaddr(addr[0])[0]
                     # Fill in end
@@ -142,7 +143,7 @@ def get_route(hostname):
                     # Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0],  destName])
+                        [str(ttl), (str(int((timeReceived - t)*1000))+"ms"), str(addr[0]), str(destName)])
                     # print("type 11 destname "+destAddr+" host "+addr[0])
                     # Fill in end
                 elif types == 3:
@@ -151,7 +152,7 @@ def get_route(hostname):
                     # Fill in start
                     # You should add your responses to your lists here
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
+                        [str(ttl), (str(int((timeReceived - t)*1000))+"ms"), str(addr[0]), str(destName)])
                     # print("type 3 destname "+destAddr+" host "+addr[0])
                     # Fill in end
                 elif types == 0:
@@ -160,7 +161,7 @@ def get_route(hostname):
                     # Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1.append(
-                        [ttl, (str(int((timeReceived - t)*1000))+"ms"), addr[0], destName])
+                        [str(ttl), (str(int((timeReceived - t)*1000))+"ms"), str(addr[0]), str(destName)])
                     # print("type 0 destname "+destAddr +" host "+addr[0])
                     if(addr[0] == destAddr):
                         tracelist2 = tracelist2+tracelist1
