@@ -82,8 +82,8 @@ def get_route(hostname):
 
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
+            tracelist1 = []
             destAddr = gethostbyname(hostname)
-            targetName = gethostbyaddr(destAddr)[0]
             icmp = getprotobyname("icmp")
             # Fill in start
             # Make a raw socket named mySocket
@@ -133,7 +133,7 @@ def get_route(hostname):
                     # Fill in end
                 except herror as e:  # if the host does not provide a hostname
                     # Fill in start
-                    destName = "Hostname not returned"
+                    destName = "hostname not returnable"
                     # print("host not found")
                     # Fill in end
 
