@@ -178,5 +178,5 @@ def get_route(hostname):
                 mySocket.close()
 
 
-# get_route("www.google.com")
-print(get_route("www.google.com"))
+get_route("www.google.com")
+# print(get_route("www.google.com"))
